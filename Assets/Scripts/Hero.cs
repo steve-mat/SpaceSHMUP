@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class Hero : MonoBehaviour {
 
@@ -68,6 +69,8 @@ public class Hero : MonoBehaviour {
             if(parentGO.tag == "Enemy") {
                 shieldLevel--;
                 Destroy(parentGO);
+            } else if(parentGO.tag == "PowerUp") {
+                AbsorbPowerUp(parentGO);
             } else {
                 Debug.Log("Triggered: " + parentGO.name);
             }
@@ -91,4 +94,12 @@ public class Hero : MonoBehaviour {
         }
 
     }
+
+
+    private void AbsorbPowerUp(GameObject parentGO) {
+        
+
+
+    }
+
 }

@@ -55,12 +55,6 @@ public class Weapon : MonoBehaviour {
 
     }
 
-    private void Fire() {
-        
-
-
-    }
-
     public WeaponType type {
         get {
             return _type;
@@ -74,10 +68,10 @@ public class Weapon : MonoBehaviour {
 
         this._type = _type;
         if(type == WeaponType.NONE) {
-            this.gameObject.SetActive(false);
+            gameObject.SetActive(false);
             return;
         } else {
-            this.gameObject.SetActive(true);
+            gameObject.SetActive(true);
         }
 
         def = Main.GetWeaponDefinition(_type);
@@ -87,6 +81,52 @@ public class Weapon : MonoBehaviour {
     }
 
     public Projectile MakeProjectile() {
+
+        GameObject go = Instantiate(def.projectilePrefab);
+        if(transform.parent.gameObject.tag == "Hero") {
+            go.tag = "ProjectileHero";
+            go.layer = LayerMask.NameToLayer("ProjectileHero");
+        } else {
+            go.tag = "ProjectileEnemy";
+            go.layer = LayerMask.NameToLayer("ProjectileEnemy");
+        }
+
+        go.transform.position = collar.transform.position;
+        go.transform.parent = PROJECTILE_ANCHOR;
+        Projectile p = go.GetComponent<Projectile>();
+        p.type = type;
+        lastShot = Time.time;
+
+        return p;
+    }
+
+
+    private void Fire() {
+
+        if(gameObject.activeInHierarchy == false) {
+            return;
+        }
+
+        if(Time.time - lastShot < def.delayBetweenShots) {
+            return;
+        }
+
+        Projectile p;
+        switch(type) {
+            case WeaponType.BLASTER:
+                p = MakeProjectile();
+                Rigidbody pRbodyBlaster = p.GetComponent<Rigidbody>();
+                pRbodyBlaster.velocity = Vector3.up * def.velocity;
+                break;
+            case WeaponType.SPREAD:
+                p = MakeProjectile();
+                p.GetComponent<Rigidbody>().velocity = Vector3.up * def.velocity;
+                p = MakeProjectile();
+                p.GetComponent<Rigidbody>().velocity = new Vector3(-0.2f, 0.9f, 0) * def.velocity;
+                p = MakeProjectile();
+                p.GetComponent<Rigidbody>().velocity =  new Vector3(0.2f, 0.9f, 0) * def.velocity;
+                break;
+        }
 
     }
 }
