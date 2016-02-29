@@ -28,6 +28,7 @@ GameObject:
   - 4: {fileID: 464358}
   - 54: {fileID: 5493638}
   - 114: {fileID: 11451098}
+  - 114: {fileID: 11439386}
   m_Layer: 9
   m_Name: Enemy_1
   m_TagString: Enemy
@@ -172,6 +173,33 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 0
+--- !u!114 &11439386
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 162916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2533419fab6f2cd4b9d1da85cf24b35b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 10
+  fireRate: 0.3
+  health: 10
+  scoreForDestroying: 100
+  showDamageForFrames: 2
+  powerUpDropChance: 1
+  bounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
+  boundsCenterOffset: {x: 0, y: 0, z: 0}
+  originalColors: []
+  materials: []
+  remainingDamageFrames: 0
+  waveFrequency: 2
+  waveWidth: 4
+  waveRotY: 45
 --- !u!114 &11451098
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -187,10 +215,15 @@ MonoBehaviour:
   fireRate: 0.3
   health: 10
   scoreForDestroying: 100
+  showDamageForFrames: 2
+  powerUpDropChance: 1
   bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
   boundsCenterOffset: {x: 0, y: 0, z: 0}
+  originalColors: []
+  materials: []
+  remainingDamageFrames: 0
 --- !u!135 &13591578
 SphereCollider:
   m_ObjectHideFlags: 1

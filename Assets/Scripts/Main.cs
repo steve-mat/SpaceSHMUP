@@ -18,6 +18,8 @@ public class Main : MonoBehaviour {
     public WeaponType[] activeWeaponTypes;
 
     public static Dictionary<WeaponType, WeaponDefinition> W_DEFS;
+    public GameObject prefabPowerUp;
+    public WeaponType[] powerUpFrequency = new WeaponType[] { WeaponType.BLASTER, WeaponType.BLASTER, WeaponType.SPREAD, WeaponType.SHIELD };
 
     void Awake() {
 
@@ -80,4 +82,19 @@ public class Main : MonoBehaviour {
 
     }
 
+    internal void ShipDestroyed(Enemy enemy) {
+
+        if(Random.value <= enemy.powerUpDropChance) {
+            int i = Random.Range(0, powerUpFrequency.Length);
+            WeaponType powerUpType = powerUpFrequency[i];
+
+            GameObject go = Instantiate(prefabPowerUp);
+            PowerUp powerUp = go.GetComponent<PowerUp>();
+
+            powerUp.SetType(powerUpType);
+
+            powerUp.transform.position = enemy.transform.position;
+        }
+
+    }
 }

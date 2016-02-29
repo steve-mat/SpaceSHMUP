@@ -23,16 +23,21 @@ public class Hero : MonoBehaviour {
     public delegate void WeaponFireDelegate();
     public WeaponFireDelegate fireDelegate;
 
+    public Weapon[] weapons;
+
 
     void Awake() {
 
         S = this;
         bounds = Utils.CombineBoundsOfChildren(gameObject);
+
+        ClearWeapons();
+        weapons[0].SetType(WeaponType.BLASTER);
         
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update () {
 
         float xAxis = Input.GetAxis("Horizontal");
         float yAxis = Input.GetAxis("Vertical");
@@ -96,10 +101,42 @@ public class Hero : MonoBehaviour {
     }
 
 
-    private void AbsorbPowerUp(GameObject parentGO) {
-        
+    private void AbsorbPowerUp(GameObject go) {
 
+        PowerUp pwrUp = go.GetComponent<PowerUp>();
+        switch(pwrUp.type) {
+            case WeaponType.SHIELD:
+                shieldLevel++;
+                break;
+            default:
+                if(pwrUp.type == weapons[0].type) {
+                    Weapon wep = GetEmptyWeaponSlot();
+                    if(wep != null) {
+                        wep.SetType(pwrUp.type);
+                    }
+                } else {
+                    ClearWeapons();
+                    weapons[0].SetType(pwrUp.type);
+                }
+                break;
+        }
+        pwrUp.AbsorbedBy(gameObject);
 
+    }
+
+    private Weapon GetEmptyWeaponSlot() {
+        for(int i = 0; i < weapons.Length; i++) {
+            if(weapons[i].type == WeaponType.NONE) {
+                return weapons[i];
+            }
+        }
+        return null;
+    }
+
+    private void ClearWeapons() {
+        foreach(Weapon wp in weapons) {
+            wp.SetType(WeaponType.NONE);
+        }
     }
 
 }

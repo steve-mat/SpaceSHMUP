@@ -33,13 +33,18 @@ public class Weapon : MonoBehaviour {
 
     public WeaponDefinition def;
     public GameObject collar;
-    public Renderer collarRenderer;
+    //public Renderer collarRenderer;
     public float lastShot;
+
+    void Awake() {
+
+        collar = transform.Find("Collar").gameObject;
+
+    }
 
     void Start() {
 
-        collar = transform.Find("Collar").gameObject;
-        collarRenderer = collar.GetComponent<Renderer>();
+        //collarRenderer = collar.GetComponent<Renderer>();
 
         SetType(_type);
 
@@ -64,10 +69,10 @@ public class Weapon : MonoBehaviour {
         }
     }
 
-    private void SetType(WeaponType _type) {
+    public void SetType(WeaponType _type) {
 
         this._type = _type;
-        if(type == WeaponType.NONE) {
+        if(_type == WeaponType.NONE) {
             gameObject.SetActive(false);
             return;
         } else {
@@ -75,7 +80,7 @@ public class Weapon : MonoBehaviour {
         }
 
         def = Main.GetWeaponDefinition(_type);
-        collarRenderer.material.color = def.color;
+        collar.GetComponent<Renderer>().material.color = def.color;
         lastShot = 0f;
 
     }
@@ -129,4 +134,5 @@ public class Weapon : MonoBehaviour {
         }
 
     }
+
 }
