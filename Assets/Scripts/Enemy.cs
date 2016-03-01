@@ -80,7 +80,7 @@ public class Enemy : MonoBehaviour {
     }
 
     void OnCollisionEnter(Collision coll) {
-
+        
         GameObject other = coll.gameObject;
         switch(other.tag) {
             case "ProjectileHero":

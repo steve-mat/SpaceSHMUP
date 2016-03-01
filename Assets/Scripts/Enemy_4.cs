@@ -69,7 +69,6 @@ public class Enemy_4 : Enemy {
 
         pos = (1 - u) * points[0] + u * points[1];
 
-        base.Move();
     }
 
     void OnCollisionEnter(Collision coll) {
@@ -103,6 +102,7 @@ public class Enemy_4 : Enemy {
 
                 partHit.health = partHit.health - Main.W_DEFS[p.type].damageOnHit;
                 ShowLocalizedDamage(partHit.mat);
+
                 if(partHit.health <= 0) {
                     partHit.go.SetActive(false);
                 }
